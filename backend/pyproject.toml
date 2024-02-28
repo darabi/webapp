@@ -1,0 +1,134 @@
+[tool]
+[tool.poetry]
+name = "backend"
+version = "0.1.0"
+homepage = "https://github.com/darabi/backend"
+description = "backend and frontend web UI."
+authors = ["Kambiz Darabi <darabi@m-creations.net>"]
+readme = "README.md"
+classifiers=[
+    'Development Status :: 2 - Pre-Alpha',
+    'Intended Audience :: Developers',
+    'Natural Language :: English',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+]
+packages = [
+    { include = "backend" },
+    { include = "test", format = "sdist" },
+]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<4.0"
+bcrypt = "^4.1.2"
+blinker = "^1.7.0"
+bootstrap-flask = "^2.3.3"
+cachelib = "^0.12.0"
+cffi = "^1.16.0"
+click = "^8.1.7"
+colorama = "^0.4.6"
+commonmark = "^0.9.1"
+deprecated = "^1.2.14"
+dnspython = "^2.5.0"
+email-validator = "^2.1.0.post1"
+flask = "^3.0.2"
+flask-assets = "^2.1.0"
+flask-bcrypt = "^1.0.1"
+flask-limiter = "^3.5.1"
+flask-login = "^0.6.3"
+flask-mail = "^0.9.1"
+flask-minify = "^0.42"
+flask-seasurf = "^1.1.1"
+flask-session = "^0.6.0"
+flask-sqlalchemy = "^3.1.1"
+flask-talisman = "^1.1.0"
+flask-wtf = "^1.2.1"
+greenlet = "^3.0.3"
+htmlmin = "^0.1.12"
+idna = "^3.6"
+is-safe-url = "^1.0"
+itsdangerous = "^2.1.2"
+jinja2 = "^3.1.3"
+jsmin = "^3.0.1"
+lesscpy = "^0.15.1"
+limits = "^3.8.0"
+markupsafe = "^2.1.5"
+packaging = "^23.2"
+ply = "^3.11"
+pycparser = "^2.21"
+pygments = "^2.17.2"
+pyjwt = "^2.8.0"
+pyparsing = "^3.1.1"
+pyscss = "^1.4.0"
+rcssmin = "^1.1.2"
+rich = "^13.7.0"
+six = "^1.16.0"
+sqlalchemy = "^2.0.27"
+typing-extensions = "^4.9.0"
+validate-email-address = "^1"
+webassets = "^2.0"
+werkzeug = "^3.0.1"
+wrapt = "^1.16.0"
+wtforms = "^3.1.2"
+xxhash = "^3.4.1"
+python-dotenv = "^1.0.1"
+
+
+[tool.poetry.extras]
+test = [
+     "pytest",
+     "pytest-cov"
+     ]
+
+dev = ["tox",
+    "pre-commit",
+    "twine",
+    "toml",
+    "black",
+    "isort",
+    "flake8",
+    "flake8-docstrings",
+    "mypy"
+    ]
+
+doc = [
+    "mkdocs",
+    "mkdocs-include-markdown-plugin",
+    "mkdocs-material",
+    "mkdocstrings",
+    "mkdocs-material-extension",
+    "mkdocs-autorefs",
+    "mike",
+    "setuptools",
+    "pkginfo",
+    "virtualenv"
+    ]
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | \.history
+)/
+'''
+[tool.isort]
+profile = "black"
