@@ -18,6 +18,7 @@ export const makeStore = preloadedState => {
       return getDefaultMiddleware().concat(quotesApiSlice.middleware)
     },
     preloadedState,
+    devTools: true,
   })
   // configure listeners using the provided defaults
   // optional, but required for `refetchOnFocus`/`refetchOnReconnect` behaviors
