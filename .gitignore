@@ -35,9 +35,9 @@ __pycache__
 # frontend artifacts
 /frontend/dist
 /frontend/node_modules
+# exclude yarn as we don't use it, package-lock.json is our CI template
 /frontend/yarn.lock
-/frontend/package-lock.json
 
 # backend artifacts
 /backend/dist
-/backend/poetry.lock
+

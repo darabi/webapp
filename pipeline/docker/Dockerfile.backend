@@ -1,0 +1,52 @@
+FROM python:3.12-slim-bookworm
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends ca-certificates jq && \
+    apt-get upgrade -y --no-install-recommends && \
+    rm -rf /var/lib/apt/lists/* && \
+    addgroup --system docker && \
+    adduser --system docker --ingroup docker --home /home/docker && \
+    mkdir -p /opt/myapp && \
+    chown -R docker:docker /opt/myapp && \
+    pip install pip --upgrade setuptools && \
+    pip install poetry
+
+ENV PATH="/home/docker/.local/bin:${PATH}"
+ARG IMAGE_VERSION
+ENV IMAGE_VERSION=${IMAGE_VERSION}
+
+ARG YOUR_ENV
+ENV YOUR_ENV=${YOUR_ENV} \
+  PYTHONFAULTHANDLER=1 \
+  PYTHONUNBUFFERED=1 \
+  PYTHONHASHSEED=random \
+  PIP_NO_CACHE_DIR=off \
+  PIP_DISABLE_PIP_VERSION_CHECK=on \
+  PIP_DEFAULT_TIMEOUT=100 \
+  # Poetry's configuration:
+  POETRY_NO_INTERACTION=1 \
+  POETRY_VIRTUALENVS_CREATE=true \
+  POETRY_CACHE_DIR='/home/docker/.cache' \
+  POETRY_VERSION=1.7.1
+
+USER docker
+WORKDIR /opt/myapp
+
+# Copy only requirements to cache them in docker layer
+COPY --chown=docker backend/poetry.lock backend/pyproject.toml /opt/myapp
+
+RUN if [ "$YOUR_ENV" == production ] ; then arg='--only=main' ; fi && \
+    poetry install $arg --no-interaction --no-ansi
+
+# the following can be moved to another stage
+
+ENV FLASK_ENV=production \
+    FLASK_APP=backend
+
+# Creating folders, and files for a project:
+COPY backend /opt/myapp
+
+EXPOSE 5000
+CMD ["poetry", "run", "flask", "run"]
