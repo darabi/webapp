@@ -1,20 +1,27 @@
-import { createRoot } from "react-dom/client"
-
-import "./i18n"
-import "./styles/app-base.css"
-import "./styles/app-components.css"
-import "./styles/app-utilities.css"
-
-import App from "./App"
-
-const container = document.getElementById("root")
+import './i18n';
+import './styles/app-base.css';
+import './styles/app-components.css';
+import './styles/app-utilities.css';
+import { createRoot } from 'react-dom/client';
+import App from './app/App';
+// import * as serviceWorker from './serviceWorker';
+// import reportWebVitals from './reportWebVitals';
+/**
+ * The root element of the application.
+ */
+const container = document.getElementById('root');
 
 if (!container) {
-  throw new Error(
-    "Root element with ID 'root' was not found in the document. Ensure there is a corresponding HTML element with the ID 'root' in your HTML file.",
-  )
+	throw new Error('Failed to find the root element');
 }
 
-const root = createRoot(container)
-
-root.render(<App />)
+/**
+ * The root component of the application.
+ */
+const root = createRoot(container);
+root.render(<App />);
+// reportWebVitals();
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+// serviceWorker.unregister();

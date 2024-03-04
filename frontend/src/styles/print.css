@@ -11,11 +11,10 @@
 
 @media print {
     /* html and body tweaks */
-    html,
-    body {
+    html, body {
         height: auto !important;
         overflow: initial !important;
-        background: none;
+        background: none
     }
 
     /* Page breaks */
@@ -32,16 +31,16 @@
     }
 
     /* General styles */
-    #common-toolbar,
-    #common-footer,
-    #common-navbar,
-    #common-settings-presets,
-    #common-layout .ps > .ps__rail-x,
-    #common-layout .ps > .ps__rail-y {
+    #fuse-toolbar,
+    #fuse-footer,
+    #fuse-navbar,
+    #fuse-settings-presets,
+    #fuse-layout .ps > .ps__rail-x,
+    #fuse-layout .ps > .ps__rail-y {
         display: none !important;
     }
 
-    #common-layout .ps {
+    #fuse-layout .ps {
         overflow: visible !important;
     }
 }

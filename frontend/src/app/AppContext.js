@@ -1,8 +1,6 @@
-import { createContext } from "react"
-
+import { createContext } from 'react';
 /**
  * The AppContext object.
  */
-const AppContext = createContext({ routes: [] })
-
-export default AppContext
+const AppContext = createContext({ routes: [] });
+export default AppContext;
