@@ -146,7 +146,7 @@ export const Quotes = () => {
     return (
       <CytoscapeComponent
         elements={CytoscapeComponent.normalizeElements(data)}
-        style={{ width: width, height: height }}
+        style={{ width: width, height: height, flex: 1 }}
         layout={layout}
         stylesheet={styleSheet}
       />
