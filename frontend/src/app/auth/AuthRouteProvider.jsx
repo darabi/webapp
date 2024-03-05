@@ -8,6 +8,9 @@ import _ from '@lodash';
 import useJwtAuth from './services/jwt/useJwtAuth';
 import UserModel from './user/models/UserModel';
 
+// Vite sets the --mode argument in import.meta.env.MODE
+const baseUrl = 'mock' === import.meta.env.MODE ? 'mock-api' : 'api';
+
 const AuthContext = createContext({
 	isAuthenticated: false
 });
@@ -26,11 +29,11 @@ function AuthRouteProvider(props) {
 	const jwtService = useJwtAuth({
 		config: {
 			tokenStorageKey: 'jwt_access_token',
-			signInUrl: 'mock-api/auth/sign-in',
-			signUpUrl: 'mock-api/auth/sign-up',
-			tokenRefreshUrl: 'mock-api/auth/refresh',
-			getUserUrl: 'mock-api/auth/user',
-			updateUserUrl: 'mock-api/auth/user',
+			signInUrl: `${baseUrl}/auth/sign-in`,
+			signUpUrl: `${baseUrl}/auth/sign-up`,
+			tokenRefreshUrl: `${baseUrl}/auth/refresh`,
+			getUserUrl: `${baseUrl}/auth/user`,
+			updateUserUrl: `${baseUrl}/auth/user`,
 			updateTokenFromHeader: true
 		},
 		onSignedIn: (user) => {

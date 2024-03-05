@@ -14,6 +14,7 @@ import mockApi from '../mock-api.json';
 let usersApi = mockApi.components.examples.auth_users.value;
 export const authApiMocks = (mock) => {
 	mock.onPost('/auth/sign-in').reply((config) => {
+		debugger;
 		const data = JSON.parse(config.data);
 		const { email, password } = data;
 		const user = _.cloneDeep(usersApi.find((_user) => _user.data.email === email));

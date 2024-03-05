@@ -9,8 +9,15 @@ import { authApiMocks } from './api/auth-api';
 const mockAdapterOptions = {
 	delayResponse: 0
 };
-const baseURL = '/mock-api';
-const mock = new ExtendedMockAdapter(axios, mockAdapterOptions, baseURL);
+
+var mock;
+if ('mock' === import.meta.env.MODE) {
+	mock = new ExtendedMockAdapter(axios, mockAdapterOptions, '/mock-api');
+} else {
+	// remove mocking behaviour
+	mock = new ExtendedMockAdapter(axios, mockAdapterOptions, '/api');
+	mock.restore();
+}
 
 function MockAdapterProvider(props) {
 	const { enabled = true, children } = props;

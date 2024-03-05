@@ -1,15 +1,22 @@
 import i18next from 'i18next';
-import ar from './navigation-i18n/ar';
+import de from './navigation-i18n/de';
 import en from './navigation-i18n/en';
-import tr from './navigation-i18n/tr';
 
 i18next.addResourceBundle('en', 'navigation', en);
-i18next.addResourceBundle('tr', 'navigation', tr);
-i18next.addResourceBundle('ar', 'navigation', ar);
+i18next.addResourceBundle('de', 'navigation', de);
+
 /**
  * The navigationConfig object is an array of navigation items for the Fuse application.
  */
 const navigationConfig = [
+	{
+		id: 'assessment',
+		title: 'Assessment',
+		translate: 'menu_assessment',
+		type: 'item',
+		icon: 'heroicons-outline:pencil-alt',
+		url: 'assess'
+	},
 	{
 		id: 'example-component',
 		title: 'Example',

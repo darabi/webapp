@@ -13,10 +13,10 @@ import { useSelector } from 'react-redux';
 import withAppProviders from './withAppProviders';
 import { AuthRouteProvider } from './auth/AuthRouteProvider';
 // import axios from 'axios';
-/**
- * Axios HTTP Request defaults
- */
-// axios.defaults.baseURL = "";
+// /**
+//  * Axios HTTP Request defaults
+//  */
+// axios.defaults.baseURL = '';
 // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 // axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
 const emotionCacheOptions = {

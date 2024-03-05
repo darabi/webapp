@@ -4,8 +4,6 @@ import clsx from 'clsx';
 import { memo } from 'react';
 import Navigation from 'app/theme-layouts/shared-components/navigation/Navigation';
 import NavbarToggleButton from 'app/theme-layouts/shared-components/navbar/NavbarToggleButton';
-import Logo from '../../../../shared-components/Logo';
-import UserNavbarHeader from '../../../../shared-components/UserNavbarHeader';
 
 const Root = styled('div')(({ theme }) => ({
 	backgroundColor: theme.palette.background.default,
@@ -36,18 +34,14 @@ function NavbarStyle1Content(props) {
 		<Root className={clsx('flex h-full flex-auto flex-col overflow-hidden', className)}>
 			<div className="flex h-48 shrink-0 flex-row items-center px-20 md:h-72">
 				<div className="mx-4 flex flex-1">
-					<Logo />
+					<NavbarToggleButton className="h-40 w-40 p-0" />
 				</div>
-
-				<NavbarToggleButton className="h-40 w-40 p-0" />
 			</div>
 
 			<StyledContent
 				className="flex min-h-0 flex-1 flex-col"
 				option={{ suppressScrollX: true, wheelPropagation: false }}
 			>
-				<UserNavbarHeader />
-
 				<Navigation layout="vertical" />
 
 				<div className="flex-0 flex items-center justify-center py-48 opacity-10">

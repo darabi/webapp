@@ -47,6 +47,7 @@ function jwtSignInTab() {
 				password
 			})
 			.catch((error) => {
+				debugger;
 				const errorData = error.response.data;
 				errorData.forEach((err) => {
 					setError(err.type, {

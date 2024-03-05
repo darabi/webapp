@@ -7,9 +7,10 @@ import userModel from '../models/UserModel';
 function updateRedirectUrl(user) {
 	/*
     You can redirect the logged-in user to a specific route depending on his role
-    */
-	if (user?.data?.loginRedirectUrl && user?.data?.loginRedirectUrl !== '') {
-		settingsConfig.loginRedirectUrl = user.data.loginRedirectUrl; // for example 'apps/academy'
+  */
+	debugger;
+	if (user?.loginRedirectUrl && user?.loginRedirectUrl !== '') {
+		settingsConfig.loginRedirectUrl = user.loginRedirectUrl; // for example 'apps/academy'
 	}
 }
 
