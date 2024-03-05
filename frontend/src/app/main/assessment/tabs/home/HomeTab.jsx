@@ -38,16 +38,6 @@ function HomeTab() {
 					<span>Form questions</span>
 				</Typography>
 			</motion.div>
-			<div className="sm:col-span-3 lg:col-span-2 grid grid-cols-1 gap-y-24">
-				<motion.div
-					variants={item}
-					className="sm:col-span-2"
-				>
-					<Typography className="font-medium text-sm text-secondary leading-none whitespace-nowrap">
-						<span>Graph 1</span>
-					</Typography>
-				</motion.div>
-			</div>
 		</motion.div>
 	);
 }
