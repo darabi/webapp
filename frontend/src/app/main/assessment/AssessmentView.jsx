@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
+import Skeleton from '@mui/material/Skeleton';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -9,9 +9,12 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import FuseLoading from '@fuse/core/FuseLoading';
 import AssessmentViewHeader from './AssessmentViewHeader';
-import HomeTab from './tabs/home/HomeTab';
-import BudgetTab from './tabs/budget/BudgetTab';
-import { useGetAssessmentWidgetsQuery } from './AssessmentApi';
+import JsonFormsWidget from './widgets/JsonFormsWidget';
+import { GraphWidget } from './widgets/GraphWidget';
+import { useAppSelector } from 'app/store/hooks';
+
+import { selectQuestionnaires, useGetMoviesQuery, useGetQuestionnaireQuery } from './AssessmentApi';
+import { currentAssessments } from './assessmentSlice';
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
 	'& .FusePageSimple-header': {
@@ -24,11 +27,12 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
  * The AssessmentView page.
  */
 function AssessmentView() {
-	const { isLoading } = useGetAssessmentWidgetsQuery();
-	const [tabValue, setTabValue] = useState(0);
+	const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+
+	const assessments = useAppSelector(currentAssessments);
 
 	function handleChangeTab(event, value) {
-		setTabValue(value);
+		setSelectedTabIndex(value);
 	}
 
 	const container = {
@@ -38,34 +42,37 @@ function AssessmentView() {
 			}
 		}
 	};
+
 	const item = {
 		hidden: { opacity: 0, y: 20 },
 		show: { opacity: 1, y: 0 }
 	};
 
-	function tabContent(tabValue) {
-		if (isLoading) {
-			return (
-				<Skeleton>
-					<HomeTab />
-				</Skeleton>
-			);
-		}
-
-		if (tabValue === 0) {
-			return <HomeTab />;
-		} else {
-			return <BudgetTab />;
-		}
+	function CustomTabPanel(props) {
+		const { children, value, index, assessmentId, ...other } = props;
+		console.log(`CustomTP, value=${value}, index=${index}, assessmentId=${assessmentId}`);
+		return (
+			<div
+				key={`${assessmentId}`}
+				role="tabpanel"
+				hidden={value !== index}
+				id={`tabpanel-${index}`}
+				aria-labelledby={`tab-${index}`}
+				{...other}
+			>
+				{value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+			</div>
+		);
 	}
-
+	console.log('Assessments var contains \n' + JSON.stringify(assessments, null, 2));
 	return (
 		<Root
+			header={<AssessmentViewHeader />}
 			content={
 				<div className="w-full flex p-12 pt-16 sm:pt-24 lg:ltr:pr-0 lg:rtl:pl-0">
 					<div className="flex flex-col basis-4/6">
 						<Tabs
-							value={tabValue}
+							value={selectedTabIndex}
 							onChange={handleChangeTab}
 							indicatorColor="secondary"
 							textColor="inherit"
@@ -82,33 +89,39 @@ function AssessmentView() {
 								)
 							}}
 						>
-							<Tab
-								className="text-14 font-semibold min-h-40 min-w-64 mx-4 px-12"
-								disableRipple
-								label="General"
-							/>
-							<Tab
-								className="text-14 font-semibold min-h-40 min-w-64 mx-4 px-12"
-								disableRipple
-								label="Depression"
-							/>
-							<Tab
-								className="text-14 font-semibold min-h-40 min-w-64 mx-4 px-12"
-								disableRipple
-								label="Back pain"
-							/>
+							{assessments.map((assessment, idx) => (
+								<Tab
+									key={assessment.id}
+									id={`tab-${idx}`}
+									label={assessment.name}
+									aria-controls={`tabpanel-${idx}`}
+									className="text-14 font-semibold min-h-40 min-w-64 mx-4 px-12"
+									disableRipple
+								/>
+							))}
 						</Tabs>
-						{tabContent(tabValue)}
+						{assessments.map((assessment, idx) => (
+							<CustomTabPanel
+								key={`${assessment.id}`}
+								assessmentId={assessment.id}
+								value={selectedTabIndex}
+								index={idx}
+							>
+								<JsonFormsWidget assessmentId={assessment.id} />
+							</CustomTabPanel>
+						))}
 					</div>
 					<div className="flex flex-col basis-2/6 gap-y-24">
-						<motion.div
-							variants={item}
-							className="sm:col-span-2"
-						>
-							<Typography className="text-lg font-medium tracking-tight leading-6 truncate">
-								<span>Graph 1</span>
-							</Typography>
-						</motion.div>
+						<Typography className="text-lg font-medium tracking-tight leading-6 truncate">
+							<span>Graph 1</span>
+						</Typography>
+						<GraphWidget
+							query={useGetMoviesQuery}
+							queryArgs={[10]}
+							width="100%"
+							height="300px"
+							className="flex basis-3/12"
+						/>
 					</div>
 				</div>
 			}

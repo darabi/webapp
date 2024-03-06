@@ -2,7 +2,10 @@ from flask import Flask, g
 from flask_json import as_json, FlaskJSON, JsonError, json_response
 from neo4j.graph import Graph, Node, Relationship
 from backend.config import env
+
+# api routes
 from backend.auth import auth_route
+from backend.questionnaire import questionnaire_route
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = env('FLASK_SECRET_KEY')
@@ -52,8 +55,9 @@ def close_db(error):
 # def output_json(data, code, headers=None):
 #     return json_response(data_=data, headers_=headers, status_=code)
 
+# register our api routes
 app.register_blueprint(auth_route)
-
+app.register_blueprint(questionnaire_route)
 
 if __name__ == "__main__":
     app.run()
