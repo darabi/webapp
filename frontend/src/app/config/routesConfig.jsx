@@ -22,7 +22,7 @@ const routes = [
 	},
 	{
 		path: '/',
-		element: <Navigate to="/example" />
+		element: <Navigate to="/assess" />
 	},
 	{
 		path: 'loading',

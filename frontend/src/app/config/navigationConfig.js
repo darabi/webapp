@@ -19,10 +19,10 @@ const navigationConfig = [
 	},
 	{
 		id: 'example-component',
-		title: 'Example',
-		translate: 'EXAMPLE',
+		title: 'Hilfe',
+		translate: 'menu_help',
 		type: 'item',
-		icon: 'heroicons-outline:star',
+		icon: 'heroicons-outline:question-mark-circle',
 		url: 'example'
 	}
 ];

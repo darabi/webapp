@@ -1,38 +1,19 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 import { JsonForms } from '@jsonforms/react';
 import { motion } from 'framer-motion';
 import { materialCells, materialRenderers } from '@jsonforms/material-renderers';
-import Typography from '@mui/material/Typography';
-import { useAppDispatch, useAppSelector } from 'app/store/hooks';
-import { selectQuestionnaire, useUpdateAnswersMutation } from '../AssessmentApi';
-import { selectQuestionnaireData } from '../assessmentSlice';
+import { useAppDispatch } from 'app/store/hooks';
+import { useUpdateAnswersMutation } from '../AssessmentApi';
+
 /**
- * Component for showing a form and updating the answer data on backend side
+ * Component for showing a form and updating the answer data on backend
  */
-function JsonFormsWidget({ assessmentId }) {
-	const questionnaire = useAppSelector(selectQuestionnaire(assessmentId));
-	const questionnaireData = useAppSelector(() => selectQuestionnaireData(assessmentId));
+function JsonFormsWidget({ schema, uischema, data }) {
+	const [formData, setFormData] = useState(data);
 
-	const [formData, setFormData] = useState({});
+	const [formSchema, setFormSchema] = useState(schema);
 
-	// set the relation between redux questionnaire and local state
-	useEffect(() => {
-		setFormData(questionnaire?.data);
-	}, [questionnaire]);
-
-	const [schema, setSchema] = useState({});
-
-	// set the relation between redux questionnaire and local state
-	useEffect(() => {
-		setSchema(questionnaire?.schema);
-	}, [questionnaire]);
-
-	const [uischema, setUischema] = useState({});
-
-	// set the relation between redux questionnaire and local state
-	useEffect(() => {
-		setUischema(questionnaire?.uischema);
-	}, [questionnaire]);
+	const [formUischema, setFormUischema] = useState(uischema);
 
 	// mutation for sending updates to backend
 	const [updateAnswers, { isLoading: isUpdating }] = useUpdateAnswersMutation();
@@ -78,8 +59,8 @@ function JsonFormsWidget({ assessmentId }) {
 				className="sm:col-span-3 lg:col-span-4 border"
 			>
 				<JsonForms
-					schema={schema}
-					uischema={uischema}
+					schema={formSchema}
+					uischema={formUischema}
 					data={formData}
 					renderers={renderers}
 					cells={materialCells}

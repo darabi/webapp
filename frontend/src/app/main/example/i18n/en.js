@@ -1,4 +1,4 @@
 const locale = {
-	TITLE: 'Example Page'
+	TITLE: 'Help'
 };
 export default locale;
