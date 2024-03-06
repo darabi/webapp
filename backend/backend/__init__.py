@@ -7,7 +7,9 @@ from backend.config import env
 from backend.auth import auth_route
 from backend.questionnaire import questionnaire_route
 
-app = Flask(__name__)
+static_folder = env('BACKEND_STATIC_DIR')
+app = Flask(__name__, static_folder=static_folder, static_url_path='')
+
 app.config['SECRET_KEY'] = env('FLASK_SECRET_KEY')
 
 json= FlaskJSON(app)
@@ -58,6 +60,20 @@ def close_db(error):
 # register our api routes
 app.register_blueprint(auth_route)
 app.register_blueprint(questionnaire_route)
+
+# catch all route for serving static content
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    if path != "" and os.path.exists(dir_path.joinpath(static_folder, path)):
+        if path.count("/") > 1:
+            [path, filename] = path.rsplit("/", maxsplit=1)
+            return send_from_directory(dir_path.joinpath(static_folder, path), filename)
+        else:
+            filename = path
+            return send_from_directory(dir_path.joinpath(static_folder), filename)
+    else:
+        return app.send_static_file('index.html')
 
 if __name__ == "__main__":
     app.run()
